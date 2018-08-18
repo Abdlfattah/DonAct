@@ -1,0 +1,26 @@
+{
+  "name": "donact",
+  "version": "0.0.1",
+  "description": "Communication tool between associations and donators",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npm start server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdlfattah/DonAct.git"
+  },
+  "author": "Abdlfattah Sekak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Abdlfattah/DonAct/issues"
+  },
+  "homepage": "https://github.com/Abdlfattah/DonAct#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9"
+  }
+}
