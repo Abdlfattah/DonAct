@@ -1,6 +1,6 @@
 mongoose = require('mongoose')
 
-const associationSchema = mongoose.Schema({
+const donationSchema = mongoose.Schema({
 
     name:{
         type:String,
@@ -12,21 +12,25 @@ const associationSchema = mongoose.Schema({
         required:true,
         maxlength:100
     },
-    address:{
-        type:String,
-        required:true
+    isTaken:{
+        type:Boolean,
+        default:false
+    },
+    ownerId:{
+        type:String
+    },
+    associationId:{
+        type:String
     },
     image:{
         type:String,
-        data:Buffer,
-        required:true
-        
+        data:Buffer
     }
 },{timestamps:true})
 
 
-const Association = mongoose.model('Association',associationSchema)
+const Donation = mongoose.model('Donation',donationSchema)
 
 module.exports={
-    Association
+    Donation
 }

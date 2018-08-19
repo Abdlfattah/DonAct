@@ -1,0 +1,1 @@
+const {Association} = require('../models/association')
