@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SALT_I = 10
 const config = require('../config/config').get(process.env.NODE_ENV)
+const { donationSchema } = require('../models/donation')
 
 const userSchema = mongoose.Schema({
 
@@ -23,6 +24,10 @@ const userSchema = mongoose.Schema({
         unique:1,
         lowercase:true
     },
+    phoneNumber:{
+        type:Number,
+        required:true
+    },
     password:{
         type:String,
         required:true,
@@ -42,7 +47,8 @@ const userSchema = mongoose.Schema({
     role:{
         type:Number,
         default:0
-    }
+    },
+    givenDonation:[donationSchema]
 },{timestamps:true})
 
 
@@ -81,7 +87,15 @@ userSchema.methods.generateTokenAuth = function(cb){
 }
 
 
-userSchema.methods.compareToken = function(token,cb){
+userSchema.statics.findByToken = function(token,cb){
+    const user = this
+    jwt.verify(token,config.SECRET_AUTH,(err,decode)=>{
+        if(err) return cb(err)
+        user.findById(decode,(err,user)=>{
+            if(err) return cb(err)
+            cb(null,user)
+        })
+    })
     
 }
 

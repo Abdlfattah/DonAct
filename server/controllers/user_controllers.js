@@ -69,6 +69,17 @@ module.exports = {
                 });
             });
         });
+    },
+
+    authentification :function(req,res){
+        res.json({
+            user:req.user,
+            isAuth:true
+        })
+    },
+
+    makeDonation :function(req,res){
+        
     }
 
 
