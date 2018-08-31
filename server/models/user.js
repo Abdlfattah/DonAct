@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const SALT_I = 10
 const config = require('../config/config').get(process.env.NODE_ENV)
-const { donationSchema } = require('../models/donation')
 
+
+
+//role : user /charity/admin
 const userSchema = mongoose.Schema({
 
     name:{
@@ -14,7 +17,6 @@ const userSchema = mongoose.Schema({
     },
     lastname:{
         type:String,
-        required:true,
         maxlength:100
     },
     email:{
@@ -26,7 +28,6 @@ const userSchema = mongoose.Schema({
     },
     phoneNumber:{
         type:Number,
-        required:true
     },
     password:{
         type:String,
@@ -45,10 +46,22 @@ const userSchema = mongoose.Schema({
         default:false
     },
     role:{
-        type:Number,
-        default:0
+        type:String,
+        default:'user'
     },
-    givenDonation:[donationSchema]
+    adress:{
+        type:String,
+    },
+    type:{
+        type:String
+    },
+    website:{
+        type:String,
+    },
+    donations:[{
+        type:Schema.Types.ObjectId,
+        ref:'Donation'
+    }]
 },{timestamps:true})
 
 
@@ -91,14 +104,23 @@ userSchema.statics.findByToken = function(token,cb){
     const user = this
     jwt.verify(token,config.SECRET_AUTH,(err,decode)=>{
         if(err) return cb(err)
-        user.findById(decode,(err,user)=>{
+        user.findOne({'_id':decode,'tokenAuth':token})
+        .populate('donations')
+        .exec((err,doc)=>{
             if(err) return cb(err)
-            cb(null,user)
+            cb(null,doc)
         })
     })
     
 }
 
+userSchema.methods.deleteToken = function(cb){
+    const user = this
+    user.update({$unset:{tokenAuth:1}},(err,user)=>{
+        if(err) return cb(err)
+        cb(null,user)
+    })
+}
 
 const User = mongoose.model('User',userSchema)
 

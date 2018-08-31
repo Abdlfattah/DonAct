@@ -4,47 +4,68 @@ import { Link } from 'react-router-dom'
 
 export default class HeaderComp extends React.Component {
     state = { 
-        activeItem: 'home' 
+        activeItem: 'home',
+        items:[
+            {
+                text:'Home',
+                name:'home',
+                link:'/'
+            },
+            {
+                text:'Support a charity',
+                name:'support',
+                link:'/donation'
+            },
+            
+        ]
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    renderitems = (items) =>(
+        items.map((item,i)=>(
+            <Menu.Item as='a'
+                key={i} 
+                name={item.text} 
+                active={this.state.activeItem === item.name} 
+                link
+                href={item.link}
+            />
+        ))
+    )
+
     render() {
+        console.log(this.props)
         return (
-                <Segment >
-                    <Menu   
-                            
+                    <div className='header-container'>
+                        <Menu  
+                           pointing
                            secondary
-                           widths={6}
-                    >
-                        <Menu.Item >
-                            <div className={{'height':'10px','background':'red'}}>
-                                <Image centered src='/logo.png' size='small' />
-                            </div>
-                        </Menu.Item>
-                        <Menu.Item 
-                            name='home' 
-                            active={this.state.activeItem === 'home'} 
-                            onClick={this.handleItemClick} 
-                        />
-                        <Menu.Item
-                            name='messages'
-                            active={this.state.activeItem === 'messages'}
-                            onClick={this.handleItemClick}
-                        />
-                        <Menu.Item
-                            name='friends'
-                            active={this.state.activeItem === 'friends'}
-                            onClick={this.handleItemClick}
-                        />
-                        <Menu.Item position='right'>
-                            <Button.Group>
-                                <Button primary>Sign up</Button>
-                                <Button>Log-in</Button>
-                            </Button.Group>
-                        </Menu.Item>
-                        
-                    </Menu>
-                </Segment>
+                        >
+                            <Menu.Item as='h3' >
+                                    <Image src='/logo.png' size='tiny' href='/' />
+                            </Menu.Item>
+                            {this.renderitems(this.state.items)}
+                           
+                            <Menu.Item as='h3' position='right'>
+                                <Button.Group>
+                                    <Button primary 
+                                            href='/register'
+                                            size='large'
+                                    >
+                                        Register
+                                    </Button>
+                                    <Button.Or size='large' text='Or' />
+                                    <Button basic 
+                                            color='blue' 
+                                            href='/login'
+                                            size='large'
+                                    >
+                                        Log in
+                                    </Button>
+                                </Button.Group>
+                            </Menu.Item>        
+                        </Menu>
+                    </div>
+
         )
     }
 }

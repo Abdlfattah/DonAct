@@ -4,9 +4,10 @@ const { Donation } = require('../models/donation')
 module.exports = {
 
     getDonation : function(req,res){
-        Donation.findById(req.query.id,(err,donation)=>{
-            if(err) return res.send(err).json({
-                success:false
+        Donation.findById(req.query.id).populate('poster').exec((err,donation)=>{
+            if(err) return res.json({
+                success:false,
+                msg:err.message
             })
             return res.json({
                 success:true,
@@ -21,6 +22,7 @@ module.exports = {
         const order = req.query.order
         const type = req.query.type
         const text = req.query.text
+        const role = req.query.role
         let query = Donation.find({$or:[
             {name: { $regex:`${text}` }},
             {description: { $regex:`${text}` }},
@@ -29,16 +31,21 @@ module.exports = {
         .limit(limit)
         .skip(skip)
         .sort(order)
-        if(type) query = query.find({
-            type:type          
+        .populate({
+            path:'poster',
+            match:{role:role}
         })
-        query.exec((err,donations)=>{
-            if(err) return res.send(err).json({
-                success:false
+        if(type!='') query = query.find({
+            type:type       
+        })
+        query.find({poster:{$ne:null}}).exec((err,donations)=>{
+            if(err) return res.json({
+                type:'internal-err',
+                msg:err.message
             })
-            return res.json({
+            res.json({
                 success:true,
-                donations
+                donations,
             })
         })
     },
@@ -56,17 +63,25 @@ module.exports = {
     },
 
     postDonation : function(req,res){
-        const donation = new Donation(req.body)
-        donation.save((err,doc)=>{
-            if(err) return res.send(err).json({
-                success:false
+        const donation = new Donation({
+                title:req.body.title,
+                type:req.body.type,
+                donation_image:req.file.filename,
+                description:req.body.description,
+                poster:req.body.poster,
+        })
+        donation.save((err,post)=>{
+            if(err) return res.json({
+                type:'internal-err',
+                msg:err.message
             })
             return res.json({
                 success:true,
-                donation:doc
+                ...post._doc
             })
         })
-    }
+    },
+
 
 
 

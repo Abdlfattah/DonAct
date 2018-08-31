@@ -1,39 +1,32 @@
 mongoose = require('mongoose')
-
-
 //status : waiting => accepted => delivering => delivered => confirmed
 const donationSchema = mongoose.Schema({
 
-    name:{
+    title:{
         type:String,
         required:true,
-        maxlength:100
     },
     type:{
         type:String,
         required:true,
-        maxlength:100
     },
     status:{
         type:String,
         default:'waiting'
     },
-    associationId:{
-        type:String,
-        required:true
+    poster:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User',
     },
     description:{
         type:String,
         required:true
     },
-    image:{
+    donation_image:{
         type:String,
-        required:true,
-        data:Buffer
     },
-    confirmationImage:{
+    confirmation_image:{
         type:String,
-        data:Buffer
     }
 },{timestamps:true})
 
