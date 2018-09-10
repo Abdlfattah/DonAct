@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 
 //import the environnement config 
 const config = require('./config/config').get(process.env.NODE_ENV)
@@ -33,8 +34,12 @@ app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/donation',donationRoutes)
 
+app.use(express.static(path.resolve(__dirname,'build')))
 
 
+app.get('*',(req,res)=>{
+    res.sendfile(path.resolve(__dirname,'build','index.html'))
+})
 
 app.listen(config.PORT,()=>{
     console.log(`server is running at the port ${config.PORT}`)
