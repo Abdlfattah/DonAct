@@ -8,7 +8,8 @@ export default function auth (Comp,type,Layout){
     class ComposedComp extends React.Component{
 
         state={
-            waiting:true
+            waiting:true,
+            currentUser:''
         }
  
         componentWillMount = () =>{
@@ -17,14 +18,17 @@ export default function auth (Comp,type,Layout){
 
         componentWillReceiveProps = (nextProps) => {
            if(nextProps.user.auth){
-                const data = nextProps.user.auth
-                if(data.isAuth && (type==='excluded' || !(data.role===type))){
-                    this.props.history.push(`/${data.role}/dashboard`)
-                }
-                if(!data.isAuth && (type==='charity' || type==='donor')){
-                    this.props.history.push('/')
-                }
-                this.setState({waiting:false})
+            const data = nextProps.user.auth
+            if(data.success && (type==='excluded' || (type==='donor' && type!=data.user.role) )){
+                return this.props.history.push(`/dashboard`)
+            }
+            if(!data.success && type!='excluded'){
+                return this.props.history.push(`/`)
+            }
+                this.setState({
+                    waiting:false,
+                    currentUser:data.user
+                })
            }
         }
 
@@ -33,11 +37,13 @@ export default function auth (Comp,type,Layout){
                 <div>
                     {!this.state.waiting?
                     <Layout {...this.props}>
-                        <Comp {...this.props}/>
+                        <Comp currentUser={this.state.currentUser}
+                                {...this.props}
+                        />
                     </Layout> 
                     :
-                    <Dimmer active>
-                        <Loader indeterminate>Loading</Loader>
+                    <Dimmer >
+                        <Loader active >Loading ...</Loader>
                     </Dimmer> 
                     } 
                 </div>          

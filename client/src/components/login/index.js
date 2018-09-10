@@ -15,7 +15,7 @@ class Login extends Component {
   componentWillReceiveProps = (nextProps)=>{
     if(nextProps.user.login){
       const data = nextProps.user.login
-      if(data.success) this.props.history.push(`/${data.role}/dashboard`)
+      if(data.success) this.props.history.push(`/dashboard`)
       else{
         this.setState({
           msg:data.type==='internal-err'?'Something wrong happend':data.msg,

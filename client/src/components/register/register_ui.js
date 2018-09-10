@@ -1,8 +1,7 @@
 import React from 'react'
-import { reduxForm } from 'redux-form'
 import { Button, Modal, Icon, Loader, Divider } from 'semantic-ui-react'
-import { validate } from './validate_form'
 import SignUpForm from './signup_form'
+import style from './style.css'
 
 function RegisterUI(props) {
 
@@ -16,7 +15,7 @@ function RegisterUI(props) {
             </Modal.Header >
             <Modal.Actions>
                 <Button color='green' 
-                        onClick={()=>props.history.push('/resend-confirmation')} 
+                        href={'/resend-confirmation'} 
                         inverted
                         floated='right'
                 >
@@ -51,7 +50,7 @@ function RegisterUI(props) {
     return (
             <div>
                 {props.waiting?
-                    <div className='regsiter-form-container'>
+                    <div className={style.loader}>
                         <Loader active indeterminate size='large'>
                             Loading
                         </Loader>
@@ -62,7 +61,7 @@ function RegisterUI(props) {
                         <Divider horizontal>
                             Or
                         </Divider>
-                        <Button fluid href='/login' >
+                        <Button fluid basic color='green' href='/login' >
                             Sign in 
                         </Button>
                     </div>
@@ -79,7 +78,4 @@ function RegisterUI(props) {
     )
 }
 
-export default reduxForm({
-    form:'register',
-    validate
-})(RegisterUI)
+export default RegisterUI

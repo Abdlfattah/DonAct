@@ -6,29 +6,29 @@ function Benifits() {
 
     const renderItems = () =>(
         items.map((item,i)=>(
-            <Grid.Column as='div' key={i} width={8}>
-                <Header color='blue' 
+                <Grid.Column key={i} width={8}>
+                    <Header color='blue' 
                             size='huge'
                             textAlign='center'
-                    >   
-                        {item.title}
-                </Header>
-                <Grid.Row>
-                    {item.content.map((subItem,i)=>(
-                        <Grid.Column as='div'>
-                            <Grid.Row>
-                                <Header size='large'>
-                                    <Icon circular color='blue' name={subItem.icon}/>
-                                    {subItem.title}
-                                </Header>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <span>{subItem.content}</span>
-                            </Grid.Row>
-                        </Grid.Column>
-                    ))}
-                </Grid.Row>
-            </Grid.Column>
+                        >   
+                            {item.title}
+                    </Header>
+                    <Grid.Row>
+                        {item.content.map((subItem,i)=>(
+                            <Grid.Column key={i} as='div'>
+                                <Grid.Row>
+                                    <Header size='large'>
+                                        <Icon circular color='blue' name={subItem.icon}/>
+                                        {subItem.title}
+                                    </Header>
+                                </Grid.Row>
+                                <Grid.Row>
+                                    <span>{subItem.content}</span>
+                                </Grid.Row>
+                            </Grid.Column>
+                        ))}
+                    </Grid.Row>
+                </Grid.Column>  
         ))
     )
 

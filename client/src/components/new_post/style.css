@@ -1,0 +1,13 @@
+.container{
+    width: 600px;
+    margin:auto;
+}
+
+.container p{
+    font-size:25px;
+    text-align: center
+}
+
+.message{
+    padding: 40px !important
+}

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import RegisterUI from './register_ui'
 import { register, clearRegister } from '../../actions/user_actions'
-import { Loader } from 'semantic-ui-react'
 
 class Register extends Component {
 
@@ -13,18 +12,35 @@ class Register extends Component {
         modalOpen:false
     }
 
-    handleForm = ({name,lastname,adress,phoneNumber,password,typeOfCharity,email},role) =>{
+    handleForm = (data,role) =>{
         if(role==='donor'){
-            this.props.dispatch(register({name,lastname,password,email,phoneNumber,role}))
+            this.props.dispatch(register({
+                name:data.name,
+                lastname:data.lastname,
+                password:data.password,
+                email:data.email,
+                phoneNumber:data.phoneNumber,
+                role
+            }))
         }
         else{
-            this.props.dispatch(register({name,adress,password,email,phoneNumber,typeOfCharity,role}))
+            this.props.dispatch(register({
+                name:data.name,
+                adress:data.adress,
+                password:data.password,
+                email:data.email,
+                phoneNumber:data.phoneNumber,
+                type:data.type,
+                role,
+                website:data.website
+            }))
         }
         this.setState({
             waiting:true
         })
     }
     componentWillReceiveProps = (nextProps) => {
+        console.log(nextProps)
         if(nextProps.user.register){
             if(nextProps.user.register.success){
                 this.setState({
@@ -58,7 +74,6 @@ class Register extends Component {
                 handleForm={this.handleForm}
                 handleModal={this.handleModal}
                 {...this.state}
-                {...this.props}
         />
     )
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import ComingSoon from '../../widgets/coming_soon'
+import ComingSoon from '../../widgets/coming_soon/coming_soon'
 
 function InboxUI() {
     return (

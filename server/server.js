@@ -26,11 +26,12 @@ app.use('/api/public',express.static('server/uploads/other'))
 app.use('/api/public',express.static('server/uploads/confirmation_images/'))
 //import routes
 const userRoutes = require('./routes/user_routes')
+const postRoutes = require('./routes/post_routes')
 const donationRoutes = require('./routes/donation_routes')
 
-
 app.use('/api/user', userRoutes);
-app.use('/api/donation', donationRoutes);
+app.use('/api/post', postRoutes);
+app.use('/api/donation',donationRoutes)
 
 
 

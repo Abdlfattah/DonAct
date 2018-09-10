@@ -1,16 +1,6 @@
-export default function(state={},action){
+export default function(state=[],action){
     switch (action.type) {
-        case 'GET_DONATIONS':
-            return {
-                ...state,
-                donations:action.payload
-            }
-        case 'CLAER_GET_DONATIONS':
-            return {
-                ...state,
-                donations:action.payload
-            }
-        case 'POST_DONATION':
+        case 'GET_MY_DONATIONS':
             return {
                 ...state,
                 donation:action.payload
@@ -20,12 +10,19 @@ export default function(state={},action){
                 ...state,
                 donation:action.payload
             }
-            case 'CLEAR_GET_DONATION':
+        case 'DONATE':
             return {
                 ...state,
-                donation:action.payload
+                donate:action.payload
+            }
+        case 'UPDATE':
+            return {
+                ...state,
+                update:action.payload
             }
         default:
-            return {...state}
+            return{...state}
+            break;
     }
+
 }

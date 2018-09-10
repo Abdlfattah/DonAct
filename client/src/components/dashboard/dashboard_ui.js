@@ -1,45 +1,43 @@
 import React from 'react'
-import { Button, Table, Icon, Grid } from 'semantic-ui-react'
+import { Button, Grid, Icon, Segment, Modal } from 'semantic-ui-react'
+import NewPost from '../new_post/index'
+import style from './style.css'
+import RenderItems from './renderItems'
+import DonationsList from './donations_list'
 
-function DashboardUI(props) {
+export default function DashboardUI ({state}){
+
+
     return (
-        <Grid>
-            <Grid.Row textAlign='right'>
-                <Button 
-                    color='google plus'
-                    href={`/${props.user.auth.role}/post`}
-                    floated='right'
-                > 
-                    <Icon name='add' />
-                    New donation
-                </Button>
-            </Grid.Row>
-            <Grid.Row>
-                <Table >
-                    <Table.Header>
-                    <Table.Row>
-                        <Table.HeaderCell>Food</Table.HeaderCell>
-                        <Table.HeaderCell>Calories</Table.HeaderCell>
-                        <Table.HeaderCell>Protein</Table.HeaderCell>
-                    </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                    <Table.Row>
-                        <Table.Cell>Apples</Table.Cell>
-                        <Table.Cell>200</Table.Cell>
-                        <Table.Cell>0g</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell>Orange</Table.Cell>
-                        <Table.Cell>310</Table.Cell>
-                        <Table.Cell>0g</Table.Cell>
-                    </Table.Row>
-                    </Table.Body>
-                </Table>
-            </Grid.Row>
-        </Grid>
+      <Grid>
+      <Grid.Row >
+        {state.role==='charity'?
+            <div className={style.add_btn}>   
+                    <Modal 
+                        closeIcon
+                        trigger={   <Button basic color='blue'> 
+                                        <Icon name='add' />
+                                        New Post
+                                    </Button>}>
+                        <Modal.Header>New Post</Modal.Header>
+                        <Modal.Content>
+                            <NewPost role={state.role} posterId={state.posterId}/>
+                        </Modal.Content>
+                    </Modal>
+            </div>
+            :<div>
+            </div>
+        }
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={16}>
+            <div className={style.container}>
+                <Segment>
+                    {state.role==='charity'?<RenderItems {...state}/>:<DonationsList donations={state.donations} role={state.role} />}
+                </Segment>
+            </div>
+        </Grid.Column>
+      </Grid.Row>
+  </Grid>
     )
 }
-
-export default DashboardUI

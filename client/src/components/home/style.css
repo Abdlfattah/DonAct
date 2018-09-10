@@ -1,0 +1,37 @@
+.container{
+    height:400px;
+    background-image: url("/image/home_donation.jpg");
+    width: 100%; 
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+
+.home_text{
+    position: absolute;
+    left:2%;
+    top: 10%;
+    width: 70%;
+    font-family: "Allerta Stencil", Sans-serif;
+    font-size:50px;
+    color:rgb(22, 19, 19);
+}
+
+.call_to_action{
+    position: absolute;
+    bottom: 10%;
+    left:0;
+    width: 100%;
+    text-align: center;
+}
+
+.home div{
+    padding: 5px
+}
+.home span{
+    font-size: 16px;
+    font-weight: 300 !important;
+    color:grey
+}

@@ -1,0 +1,11 @@
+.action_container{
+    position: relative;
+    margin-left: 200px
+}
+
+.button{
+    position: absolute;
+    right:0;
+    top: 50%;
+    background: red
+}

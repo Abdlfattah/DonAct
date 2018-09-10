@@ -1,13 +1,14 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
+import style from './style.css'
 
 function CallToAction() {
     return (
-        <div className='home-bg'>
-            <div className="home-text">
-                <p className="font-allerta">Make sure your donation gets to where it needs to</p> 
+        <div className={style.container}>
+            <div className={style.home_text}>
+                <p>Make sure your donation gets to where it needs to</p> 
             </div>
-            <div className='home-call-to-action'>
+            <div className={style.call_to_action}>
                 <Button.Group widths={16}>
                     <Button size='huge'  
                             color='instagram'

@@ -1,0 +1,23 @@
+.header{
+    padding: 40px;
+    text-align: center;
+    font-size: 30px;
+    font-family: "Allerta Stencil", Sans-serif
+}
+
+.container{
+    margin-top:30px
+}
+
+.not_found{
+    font-family: 'Roboto';
+    font-size: 30px;
+    text-align: center;
+    color:rgb(82, 82, 68)
+}
+
+
+.card img{
+    height: 200px;
+    
+}

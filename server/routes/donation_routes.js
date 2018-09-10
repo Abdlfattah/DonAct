@@ -1,14 +1,10 @@
 const express = require('express');
-const { postDonation, getAllDonations, updateDonation, getDonation } = require('../controllers/donation_controllers')
 const router = express.Router();
-const { upload } = require('../middleware/upload')
+const { getDonations, getDonation, update, donate } = require('../controllers/donation_controllers')
 
-router.get('/all_donations',getAllDonations)
-router.post('/update_donation',updateDonation)
+router.get('/get_donations',getDonations)
 router.get('/get_donation',getDonation)
-router.post('/post_donation',upload.single('donation_image'),postDonation)
-
- 
+router.post('/update',update)
+router.post('/donate',donate)
 
 module.exports = router;
-

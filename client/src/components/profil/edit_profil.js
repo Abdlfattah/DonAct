@@ -1,7 +1,8 @@
 import React from 'react'
-import { TextInput, FileInput } from '../../widgets/render_field'
+import { TextInput } from '../../widgets/input_field/render_field'
 import { Field, reduxForm } from 'redux-form'
-import { Form, Icon, Button, Grid } from 'semantic-ui-react'
+import { Form, Icon, Grid } from 'semantic-ui-react'
+import FileInput from '../../widgets/input_file'
 
 class EditProfil extends React.Component{
 
@@ -31,16 +32,10 @@ class EditProfil extends React.Component{
                 icon:{name:'key',color:'blue'},
                 disabled:true
             },
-            {
-                component:FileInput,
-                name:'avatar',
-                type:'file',
-                placeholder:'Re-enter you new password',
-                disabled:true
-            }
         ]
 
     }
+    
 
     disbaledHandle = (i) =>{
         let newItems = this.state.items
@@ -51,6 +46,7 @@ class EditProfil extends React.Component{
         })
     }
 
+    
     renderField = (items) =>(
         items.map((item,i)=>(
             <Grid.Row key={i}>
@@ -66,7 +62,6 @@ class EditProfil extends React.Component{
                 </Grid.Column>
                 <Grid.Column verticalAlign='middle' width={1}>
                     <Icon 
-                        size='meduim' 
                         color='grey' 
                         name='settings' 
                         onClick={()=>this.disbaledHandle(i)}
@@ -80,13 +75,9 @@ class EditProfil extends React.Component{
         return (
             <Form>
                 <Grid>
-                    <Grid.Row >
-                        <Field
-                            component={FileInput}
-                            name='avatr'
-                            type='file'
-                            placeholder=''
-                            icon=''
+                    <Grid.Row textAlign='center'>
+                        <FileInput title="change your profil's picture"
+                                    {...this.props}
                         />
                     </Grid.Row>
                     {this.renderField(this.state.items)}

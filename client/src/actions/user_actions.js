@@ -69,6 +69,14 @@ export function authUser(){
     }
 }
 
+
+export function clearAuthUser(){
+    return{
+        type:'CLEAR_AUTH_USER',
+        payload:null
+    }
+}
+
 //----------------------- Resend confirmation email------------------------------
 export function resendConfirmation(email){
     const request = axios.post('/api/user/resend_confirmation', email)
@@ -97,19 +105,7 @@ export function logout(){
     }
 }
 
-//------------ get user -------------------------------------------------------------
 
-
-export function donate({donationId,userId}){
-    const request = axios.get(`/api/user/donate?donationId=${donationId}&userId=${userId}`)
-                    .then( response => response.data)
-        
-    return{
-        type:'DONATE',
-        payload:request
-    }
-
-}
 
 export function updateUser(id,user){
     const request = axios.post(`/api/user/update?id=${id}`,user)
@@ -118,6 +114,17 @@ export function updateUser(id,user){
             
     return{
         type:'UPDATE',
+        payload:request
+    }
+}
+
+
+export function getUser(id){
+    const request = axios.get(`/api/user/get_user?id=${id}`)
+                    .then( response => response.data)
+            
+    return{
+        type:'GET_USER',
         payload:request
     }
 }

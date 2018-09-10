@@ -1,25 +1,26 @@
 import React from 'react'
-import { Card, Grid, Image, Segment } from 'semantic-ui-react'
+import { Card, Image, Segment } from 'semantic-ui-react'
 import EditProfil from './edit_profil'
+import style from './style.css'
 
-function ProfilUI({user}) {
+function ProfilUI(props) {
 
     return (
         
-            <div className='profile-container'>
+            <div className={style.container}>
                 <Segment color='blue'>
-                    <div className='profile-card'>
+                    <div className={style.card}>
                         <Card
                             color='blue'
                             icon='mail'
                         >
-                            <Image src={user.auth.image=''?`/api/public/${user.auth.image}`:'/image/avatar.png'}/>
+                            <Image src={props.user.avatar?`/api/public/${props.user.avatar}`:'/image/avatar.png'}/>
                             <Card.Header as='h2' textAlign='center'>
-                                <b>{`${user.auth.name} ${user.auth.lastname}`}</b>
+                                <b>{`${props.user.name} ${props.user.lastname}`}</b>
                             </Card.Header>
                         </Card>
                     </div>
-                    <EditProfil/>  
+                    <EditProfil {...props}/>  
                 </Segment>
             </div>
 

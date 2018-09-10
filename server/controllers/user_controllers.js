@@ -6,23 +6,35 @@ module.exports = {
     
     registerUser :function(req,res){
         user = new User(req.body)
-        user.save((err,user)=>{
+        User.findOne({email:user.email},(err,doc)=>{
             if(err) return res.send({
-                type:'invalid',
+                type:'internal-err',
+                msg:err.message
+            })
+            if(doc) return res.send({
+                type:'exist',
                 msg:'This email already exist'
             })
-            const token = new Token({ _userId: user._id, token: '' });
-            token.generateToken(user,req.headers.host,(err)=>{
-                if (err) return res.status(500).send({ 
+            user.save((err,user)=>{
+                if(err) return res.send({
                     type:'internal-err',
-                    msg: err.message })
-                res.status(200).send({
-                    success:true,
-                    msg:`A verification email has been sent to ${user.email}.`,
-                    id:user._id
+                    msg:err.message
+                })
+                const token = new Token({ _userId: user._id, token: '' });
+                token.generateToken(user,req.headers.host,(err)=>{
+                    if (err) return res.send({ 
+                        type:'internal-err',
+                        msg: err.message 
+                    })
+                    res.status(200).send({
+                        success:true,
+                        msg:`A verification email has been sent to ${user.email}.`,
+                        id:user._id
+                    })
                 })
             })
         })
+       
     },
 
     logout:function(req,res){
@@ -163,13 +175,23 @@ module.exports = {
 
     authentification :function(req,res){
         res.json({
-            isAuth:true,
-            ...req.user._doc
+            success:true,
+            user:req.user
         })
     },
 
     getUser : function(req,res){
-        User.findById(req.query.id,(err,user)=>{
+        User.findById(req.query.id)
+        .populate({
+            path:'donations',
+            select:'title type status poster donation_image',
+            populate:{
+                    path:'poster',
+                    select:'name avatar'
+            }
+        })
+        .select('donations')
+        .exec((err,user)=>{
             if(err) return res.json({
                 type:'internal-err',
                 msg:err.message
@@ -182,28 +204,13 @@ module.exports = {
     },
 
 
-    donate :function(req,res){
-        const donationId = req.query.donationId
-        const userId = req.query.userId
-        User.update(
-            { _id: userId },
-            { $push: { donations: donationId } }
-        )
-        .exec((err,user)=>{
-            if(err) return res.json({
-                err:message.err,
-                type:'internal-err'
-            })
-            return res.json({
-                success:true,
-                user
-            })
-        })
-    },
 
     update :function(req,res){
         const id = req.query.id
-        User.findOneAndUpdate(id,req.body,(err,user)=>{
+        const user ={
+            avatar:req.file.filename
+        }
+        User.findByIdAndUpdate(id,user,{new:true, upsert: true},(err,user)=>{
             if(err) return res.send({
                 type:'internal-err',
                 msg:err.message

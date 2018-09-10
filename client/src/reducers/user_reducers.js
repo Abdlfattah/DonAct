@@ -35,6 +35,11 @@ export default function(state={},action){
                 ...state,
                 auth:action.payload
             }
+        case 'CLEAR_AUTH_USER':
+            return {
+                ...state,
+                auth:action.payload
+            }
         case 'RESEND_CONFIRMATION':
             return {
                 ...state,
@@ -50,15 +55,15 @@ export default function(state={},action){
                 ...state,
                 logout:action.payload
             }
-        case 'DONATE':
-            return{
-                ...state,
-                donate:action.payload
-            }
         case 'UPDATE':
             return{
                 ...state,
-                user:action.payload
+                update:action.payload
+            }
+        case 'GET_USER':
+            return{
+                ...state,
+                get_user:action.payload
             }
         default:
             return {...state}

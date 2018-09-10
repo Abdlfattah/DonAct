@@ -37,9 +37,8 @@ const userSchema = mongoose.Schema({
     tokenAuth:{
         type:String
     },
-    image:{
+    avatar:{
         type:String,
-        data:Buffer
     },
     isVerified:{
         type:Boolean,
@@ -47,7 +46,6 @@ const userSchema = mongoose.Schema({
     },
     role:{
         type:String,
-        default:'user'
     },
     adress:{
         type:String,
@@ -58,10 +56,6 @@ const userSchema = mongoose.Schema({
     website:{
         type:String,
     },
-    donations:[{
-        type:Schema.Types.ObjectId,
-        ref:'Donation'
-    }]
 },{timestamps:true})
 
 
@@ -105,7 +99,7 @@ userSchema.statics.findByToken = function(token,cb){
     jwt.verify(token,config.SECRET_AUTH,(err,decode)=>{
         if(err) return cb(err)
         user.findOne({'_id':decode,'tokenAuth':token})
-        .populate('donations')
+        .select('name lastname _id avatar role')
         .exec((err,doc)=>{
             if(err) return cb(err)
             cb(null,doc)

@@ -1,20 +1,33 @@
 import React from 'react'
 import { Field } from 'redux-form'
-import { Form, Segment, Button, Icon } from 'semantic-ui-react'
+import { Form, Button, Icon } from 'semantic-ui-react'
 
-function FormComp({items, title, buttonText, buttonIcon, buttonColor,fluid,...props}) {
+function FormComp({items, title, buttonText, buttonIcon, buttonColor,fluid,handleUpdate,...props}) {
 
     const renderForm = (items) =>(
         items.map((item,i)=>(
             <Form.Field key={i}>
-                <Field 
-                    component={item.comp}
-                    placeholder={item.placeholder}
-                    name={item.name}
-                    type={item.type}
-                    options={item.options}
-                    icon={item.icon}      
-                />
+               {item.title?
+                    <Field 
+                        component={item.comp}
+                        placeholder={item.placeholder}
+                        name={item.name}
+                        type={item.type}
+                        options={item.options}
+                        icon={item.icon}
+                        title={item.title}
+                        handleUpdate={handleUpdate}
+                    />
+                    :
+                    <Field 
+                        component={item.comp}
+                        placeholder={item.placeholder}
+                        name={item.name}
+                        type={item.type}
+                        options={item.options}
+                        icon={item.icon}
+                    />
+                }
             </Form.Field>
         ))
     )
@@ -24,11 +37,12 @@ function FormComp({items, title, buttonText, buttonIcon, buttonColor,fluid,...pr
             <Form   onSubmit={props.handleSubmit(data=>props.handleForm(data))}>
                 {renderForm(items)}
                 <Form.Field >
-                    <div className='button-style'>
+                    <div style={{width:300,margin:'auto'}}>
                         <Button 
                             loading={props.submitting} 
                             color={buttonColor}
                             fluid={fluid}
+                            basic={props.basic?true:false}
                         >
                             {buttonIcon?
                                 <Icon name={buttonIcon} />
@@ -37,7 +51,7 @@ function FormComp({items, title, buttonText, buttonIcon, buttonColor,fluid,...pr
                             {buttonText}
                         </Button>
                     </div> 
-                    </Form.Field>
+                </Form.Field>
             </Form>        
         </div>
     )

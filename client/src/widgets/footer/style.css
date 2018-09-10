@@ -1,0 +1,11 @@
+.container{
+    font-family: 'Roboto';
+    font-weight: 300;
+    padding: 10px;
+    color: #ddd9d9e0;
+    background-color: #343434; 
+    position: absolute;
+    left:0px;
+    bottom:0px;
+    width: 100%;
+}

@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router();
-const { registerUser, confirmation, login, authentification, resendConfirmation, logout, getUser, donate, update } = require('../controllers/user_controllers')
+const { registerUser, confirmation, login, authentification, resendConfirmation, logout, getUser, update } = require('../controllers/user_controllers')
 const { Auth } = require('../middleware/auth')
+const { upload } = require('../middleware/upload')
 
 router.post('/register', registerUser)
 router.get('/confirmation', confirmation)
@@ -10,8 +11,7 @@ router.get('/auth', Auth, authentification)
 router.post('/resend_confirmation', resendConfirmation)
 router.get('/logout', logout)
 router.get('/get_user', getUser)
-router.get('/donate', donate)
-router.post('/update', update)
+router.post('/update',upload.single('image'),update)
 
 
 

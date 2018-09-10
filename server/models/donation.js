@@ -1,39 +1,32 @@
 mongoose = require('mongoose')
-//status : waiting => accepted => delivering => delivered => confirmed
+//status : 0-waiting => 1-accepted => 2-delivering 1 => 3-delivered 2 => 4-confirmed
 const donationSchema = mongoose.Schema({
 
-    title:{
-        type:String,
-        required:true,
-    },
-    type:{
-        type:String,
-        required:true,
-    },
     status:{
-        type:String,
-        default:'waiting'
+        type:Number,
+        default:0
     },
-    poster:{
+    charity:{
         type: mongoose.Schema.Types.ObjectId,
         ref:'User',
-    },
-    description:{
-        type:String,
         required:true
     },
-    donation_image:{
-        type:String,
+    donor:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:true
     },
-    confirmation_image:{
-        type:String,
-    }
+    post:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Post',
+        required:true
+    },
+    
 },{timestamps:true})
 
-// donationSchema.index({ 'name':'text' })
+
 const Donation = mongoose.model('Donation',donationSchema)
 
 module.exports={
-    Donation,
-    donationSchema
+    Donation
 }

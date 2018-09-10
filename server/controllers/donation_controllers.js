@@ -3,88 +3,91 @@ const { Donation } = require('../models/donation')
 
 module.exports = {
 
-    getDonation : function(req,res){
-        Donation.findById(req.query.id).populate('poster').exec((err,donation)=>{
-            if(err) return res.json({
-                success:false,
+    getDonations : function(req,res){
+        const userId = req.query.userId
+        const role = req.query.role
+        const oppositeRole = role === 'donor' ? 'charity':'donor'
+        Donation.find({[role]:userId})
+        .populate(oppositeRole)
+        .populate('post')
+        .exec((err,donations)=>{
+            if(err) return res.send({
+                type:'internal-err',
                 msg:err.message
             })
             return res.json({
+                success:true,
+                donations
+            })
+        })
+    },
+
+    getDonation : function(req,res){
+        const donationId = req.query.donationId
+        const role = req.query.role
+        const oppositeRole = role === 'donor' ? 'charity':'donor'
+        Donation.findOne({_id:donationId})
+        .populate(oppositeRole)
+        .populate({
+            path:'post',
+            populate:{path:'poster'}
+        })
+        .exec((err,donation)=>{
+            if(err) return res.send({
+                type:'interna-err',
+                msg:err.message
+            })
+            res.json({
                 success:true,
                 donation
             })
         })
     },
 
-    getAllDonations : function(req,res){
-        const limit = parseInt(req.query.limit)
-        const skip = parseInt(req.query.skip)
-        const order = req.query.order
-        const type = req.query.type
-        const text = req.query.text
-        const role = req.query.role
-        let query = Donation.find({$or:[
-            {name: { $regex:`${text}` }},
-            {description: { $regex:`${text}` }},
-            {type: { $regex:`${text}` }}
-        ],})
-        .limit(limit)
-        .skip(skip)
-        .sort(order)
-        .populate({
-            path:'poster',
-            match:{role:role}
-        })
-        if(type!='') query = query.find({
-            type:type       
-        })
-        query.find({poster:{$ne:null}}).exec((err,donations)=>{
-            if(err) return res.json({
+    update : function(req,res){
+        const donationId = req.query.donationId
+        const newStatus = req.body
+        Donation.findByIdAndUpdate(donationId, newStatus,{new:true},(err,donation)=>{
+            if(err) return res.send({
                 type:'internal-err',
                 msg:err.message
             })
             res.json({
                 success:true,
-                donations,
+                donation
             })
         })
     },
 
-    updateDonation : function(req,res){
-        Donation.findByIdAndUpdate(req.query.id,req.body,{new:true},(err,newDonation)=>{
-            if(err) return res.status(400).send(err).json({
-                success:false
-            })
-            return res.json({
-                success:true,
-                donation:newDonation
-            })
-        })
-    },
-
-    postDonation : function(req,res){
-        const donation = new Donation({
-                title:req.body.title,
-                type:req.body.type,
-                donation_image:req.file.filename,
-                description:req.body.description,
-                poster:req.body.poster,
-        })
-        donation.save((err,post)=>{
-            if(err) return res.json({
+    donate : function(req,res){
+        const donation = new Donation(req.body)
+        const donorId = req.body.donor
+        const postId = req.body.post
+        Donation.findOne({donor:donorId,post:postId},(err,doc)=>{
+            if(err) return res.send({
                 type:'internal-err',
                 msg:err.message
             })
-            return res.json({
-                success:true,
-                ...post._doc
+            if(doc){
+                return res.json({
+                    success:true,
+                    exist:true,
+                    donationId:doc._id
+                })
+            }
+            donation.save((err,donation)=>{
+                if(err) return res.send({
+                    type:'internal-err',
+                    msg:err.message
+                })
+                res.json({
+                    success:true,
+                    exist:false,
+                    donationId:donation._id
+                })
             })
         })
-    },
-
-
-
-
-
+        
+    }
 
 }

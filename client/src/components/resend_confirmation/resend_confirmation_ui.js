@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput } from '../../widgets/render_field'
+import { TextInput } from '../../widgets/input_field/render_field'
 import { reduxForm, Field } from 'redux-form'
 import { Button, Form, Modal, Icon } from 'semantic-ui-react'
 

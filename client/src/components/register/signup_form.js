@@ -1,65 +1,71 @@
 import React from 'react'
-import { Button, Reveal, Container } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import { items } from './static_content'
 import FormComp from '../../widgets/form'
+import style from './style.css'
+import { validate } from './validate_form'
+import { reduxForm } from 'redux-form'
 
 class SignUpForm extends React.Component {
 
     state={
-        charityTab:false,
-        donorTab:true
+        tab:true
     }
 
     handleVisbility = (e,type) =>{
         if(type==='donor'){
             this.setState({
-                donorTab:true,
-                charityTab:false
+                tab:true
             })
         }
         else{
             this.setState({
-                donorTab:false,
-                charityTab:true
+                tab:false
             })
         }
     }
     render(){
         return (
             <div>
-                <div className='signup-buttons'>
-                <Button.Group 
-                    toggle 
-                     
-                    attached='top'
-                   
-                >
-                    <Button color='instagram'  onClick={(e)=>this.handleVisbility(e,'donor')}>
+                <div className={style.switch_buttons}>
+                <Button.Group  attached='top'>
+                    <Button 
+                        toggle
+                        basic
+                        onClick={(e)=>this.handleVisbility(e,'donor')}
+                        color={this.state.tab?'blue':null}
+                    >
                         Sign up as a donor
                     </Button>
-                    <Button  onClick={(e)=>this.handleVisbility(e,'charity')}>
+                    <Button 
+                        toggle
+                        basic 
+                        onClick={(e)=>this.handleVisbility(e,'charity')}
+                        color={this.state.tab?null:'blue'}
+                    >
                         Sign up as a charity
                     </Button>
                 </Button.Group>
                 </div>
-                <div style={{display:this.state.donorTab?'initial':'none'}}>
-                        <FormComp 
-                            items={items.donor} 
-                            buttonText='Sign Up'
-                            buttonColor='instagram'
-                            fluid={true}
-                            {...this.props}
-                        />
-                </div>     
-                <div style={{display:this.state.charityTab?'initial':'none'}}>
+                <div>
+                   { this.state.tab?
+                    <FormComp 
+                        items={items.donor} 
+                        buttonText='Sign Up'
+                        buttonColor='blue'
+                        role='donor'
+                        fluid={true}
+                        {...this.props}
+                    />  
+                    :
                     <FormComp 
                         items={items.charity} 
                         buttonText='Sign Up'
-                        buttonColor='instagram'
+                        buttonColor='blue'
+                        role='charity'
                         fluid={true}
-                        handleForm={this.props.handleForm}
                         {...this.props}
-                    /> 
+                    /> }
                 </div>
             </div>
         )
@@ -67,4 +73,7 @@ class SignUpForm extends React.Component {
     
 }
 
-export default SignUpForm
+export default reduxForm({
+    form :'register', validate
+})
+(SignUpForm)

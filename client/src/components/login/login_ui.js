@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button, Form, Divider, Modal, Header, Icon } from 'semantic-ui-react'
-import { TextInput } from '../../widgets/render_field'
+import { Button, Divider, Modal, Header, Icon } from 'semantic-ui-react'
+import { TextInput } from '../../widgets/input_field/render_field'
 import { reduxForm } from 'redux-form'
 import FormComp from '../../widgets/form'
 
@@ -29,12 +29,17 @@ function LoginUI(props) {
                 items={items} 
                 title='Sign in'
                 buttonText='Sign in'
-                buttonColor='instagram'
+                buttonColor='blue'
                 fluid={true}
                 {...props}
             />
             <Divider />
-            <Button fluid href='/register' >
+            <Button 
+                fluid 
+                href='/register'
+                basic
+                color='grey' 
+            >
                 Sign up 
             </Button>
             <Modal

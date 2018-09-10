@@ -1,0 +1,20 @@
+.header{
+    padding: 10px
+}
+
+.logo{
+    width:80px;
+    margin: auto;
+}
+
+
+.container {
+    width:500px;
+    margin: auto;
+}
+
+
+.container p{
+    font-size:25px;
+    text-align: center
+}
