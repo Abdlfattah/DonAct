@@ -37,7 +37,7 @@ function FormComp({items, title, buttonText, buttonIcon, buttonColor,fluid,handl
             <Form   onSubmit={props.handleSubmit(data=>props.handleForm(data))}>
                 {renderForm(items)}
                 <Form.Field >
-                    <div style={{width:300,margin:'auto'}}>
+                    <div>
                         <Button 
                             loading={props.submitting} 
                             color={buttonColor}

@@ -24,7 +24,7 @@ class Logout extends Component {
         return (
            <div>
                 <Dimmer active>
-                    <Loader indeterminate>Logging out ...</Loader>
+                    <Loader active>Logging out ...</Loader>
                 </Dimmer> 
            </div>
         )

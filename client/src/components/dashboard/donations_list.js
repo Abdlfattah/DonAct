@@ -35,7 +35,7 @@ function DonationsList(props) {
                     <Item.Meta>
                         <span>{options.find(option=>option.value===item.post.type).text}</span>
                     </Item.Meta>
-                    {item.status===5?
+                    {item.status===4?
                         <div style={{color:'green'}}>
                             <Icon name='check' color='green'/>{items_status[props.role][item.status-1].status}
                         </div>

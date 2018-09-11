@@ -22,6 +22,7 @@ import Profil from '../components/profil'
 import Inbox from '../components/inbox'
 import DonationPost from '../components/donation_post'
 import PostInfo from '../components/post_info'
+import ComingSoon from '../widgets/coming_soon/coming_soon'
 
 function Routes() {
     return (
@@ -33,7 +34,7 @@ function Routes() {
 
             <Route path='/donation/:id' exact component={auth(DonationPost,null,UserLayout)}/>
 
-            <Route path='/public/posts' exact component={auth(PostsList,null,PublicLayout)}/>
+            <Route path='/public/posts' exact component={auth(Home,'excluded',PublicLayout)}/>
 
             <Route path='/posts' exact component={auth(PostsList,'donor',UserLayout)}/>
 

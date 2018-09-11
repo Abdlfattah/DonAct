@@ -47,7 +47,7 @@ function DonationPostUI(props) {
                                         loading={props.waiting}
                                     >
                                         <Icon color='green' name='check'/>
-                                        Check
+                                        Done!
                                     </Button>
                                 </Step>
                                 :null

@@ -14,7 +14,7 @@ export default class HeaderComp extends React.Component {
             {
                 text:'Support a charity',
                 name:'support',
-                link:'/donation'
+                link:'/public/posts'
             },
             
         ]
@@ -48,15 +48,15 @@ export default class HeaderComp extends React.Component {
                                 <Button.Group>
                                     <Button primary 
                                             href='/register'
-                                            size='large'
+                                
                                     >
                                         Register
                                     </Button>
-                                    <Button.Or size='large' text='Or' />
+                                    <Button.Or text='Or' />
                                     <Button basic 
                                             color='blue' 
                                             href='/login'
-                                            size='large'
+                                            
                                     >
                                         Log in
                                     </Button>

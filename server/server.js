@@ -34,12 +34,15 @@ app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/donation',donationRoutes)
 
-app.use(express.static(path.resolve(__dirname,'build')))
+app.use(express.static('client/build'))
+
+if(process.env.NODE_ENV==='production'){
+    app.get('/*',(req,res)=>{
+        res.sendfile(path.resolve(__dirname,'../client','build','index.html'))
+    })
+}
 
 
-app.get('*',(req,res)=>{
-    res.sendfile(path.resolve(__dirname,'build','index.html'))
-})
 
 app.listen(config.PORT,()=>{
     console.log(`server is running at the port ${config.PORT}`)
