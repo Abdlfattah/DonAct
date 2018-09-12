@@ -60,7 +60,7 @@ function DonationsList(props) {
     console.log(props.donations)
     return (
         <div>
-            {props.donations.length==0?
+            {props.donations.length===0?
                 <div className={style.not_found}>
                     <Icon name='meh outline' size='huge'/>
                     <p>Oopps sorry...There is no result</p>   
