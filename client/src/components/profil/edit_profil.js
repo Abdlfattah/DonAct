@@ -73,6 +73,7 @@ class EditProfil extends React.Component{
                                     {...this.props}
                         />
                     </Grid.Row>
+                    
                 </Grid>
             </Form>  
     )
