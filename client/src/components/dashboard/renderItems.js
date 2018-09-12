@@ -24,6 +24,7 @@ class RenderItems extends React.Component {
         }
     }
     render(){
+        console.log('rendeItem',this.props)
         return (
             <div>
                 <div className={style.switch_buttons}>
