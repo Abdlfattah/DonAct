@@ -1,7 +1,7 @@
 const config={
     production:{
-        SECRET_AUTH:process.env.SECRET_AUTH,
-        SECRET_EMAIL:process.env.SECRET_EMAIL,
+        SECRET_AUTH:'secretpassword',
+        SECRET_EMAIL:'secretEmail',
         DATABASE:process.env.MONGODB_URI,
         PORT:process.env.PORT
     },
