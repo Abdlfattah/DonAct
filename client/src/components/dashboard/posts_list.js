@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, Item, Icon, Button } from 'semantic-ui-react'
 import style from './style.css'
 import { options } from '../../config/donation_type'
+import moment from 'moment'
 
 
 function PostsList(props) {
@@ -12,6 +13,7 @@ function PostsList(props) {
                 <Item.Image className={style.donation_img} as='img' src={`/api/public/${item.image}`} />
                 <Item.Content >
                     <Item.Header as='a'>{item.title}</Item.Header>
+                    <div className={style.date}>{moment(item.createdAt).format("DD/MM/YYYY")}</div>
                     <Item.Content >
                        {props.role==='donor'?
                         <div>

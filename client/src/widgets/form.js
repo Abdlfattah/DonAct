@@ -39,7 +39,6 @@ function FormComp({items, title, buttonText, buttonIcon, buttonColor,fluid,handl
                 <Form.Field >
                     <div>
                         <Button 
-                            loading={props.submitting} 
                             color={buttonColor}
                             fluid={fluid}
                             basic={props.basic?true:false}

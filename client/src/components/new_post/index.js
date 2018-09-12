@@ -17,16 +17,18 @@ class NewPost extends React.Component {
 
 
     handleForm = ({title,description,type}) => {
-        console.log('hhh')
-        let body = new FormData()
-        body.append('title',title)
-        body.append('description',description)
-        body.append('image_type','donation_image')
-        body.append('poster',this.props.posterId)
-        body.append('type',type)
-        body.append('image',this.state.image,this.state.image.name)
-        this.props.dispatch(post(body))
-        this.setState({waiting:true})
+        if(this.state.image!==''){
+            let body = new FormData()
+            body.append('title',title)
+            body.append('description',description)
+            body.append('image_type','donation_image')
+            body.append('poster',this.props.posterId)
+            body.append('type',type)
+            body.append('image',this.state.image,this.state.image.name)
+            this.props.dispatch(post(body))
+            this.setState({waiting:true})
+        }
+        
     }
 
     handleUpdate = (url) => {
@@ -34,7 +36,6 @@ class NewPost extends React.Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        console.log(nextProps)
         if(nextProps.post.newPost){
             const data = nextProps.post.newPost
             if(data.success){
@@ -52,7 +53,6 @@ class NewPost extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
           <NewPostUI {...this.state}
                   handleForm={this.handleForm}

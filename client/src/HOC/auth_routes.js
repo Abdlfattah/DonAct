@@ -22,7 +22,7 @@ export default function auth (Comp,type,Layout){
             if(data.success && (type==='excluded' || (type==='donor' && type!=data.user.role) )){
                 return this.props.history.push(`/dashboard`)
             }
-            if(!data.success && type!='excluded'){
+            if(!data.success && type!=='excluded'){
                 return this.props.history.push(`/`)
             }
                 this.setState({

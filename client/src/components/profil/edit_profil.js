@@ -37,14 +37,7 @@ class EditProfil extends React.Component{
     }
     
 
-    disbaledHandle = (i) =>{
-        let newItems = this.state.items
-        newItems[i].disabled = false
 
-        this.setState({
-            items:newItems
-        })
-    }
 
     
     renderField = (items) =>(
@@ -80,7 +73,6 @@ class EditProfil extends React.Component{
                                     {...this.props}
                         />
                     </Grid.Row>
-                    {this.renderField(this.state.items)}
                 </Grid>
             </Form>  
     )

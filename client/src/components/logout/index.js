@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/user_actions'
 import { Dimmer, Loader } from 'semantic-ui-react'
+import style from './style.css'
 
 class Logout extends Component {
 
@@ -12,7 +13,6 @@ class Logout extends Component {
 
     componentWillReceiveProps = (nextProps) =>{
         if(nextProps.user.logout){
-            console.log(nextProps)
             if(nextProps.user.logout.success){
                 setTimeout(()=>{
                     this.props.history.push('/')
@@ -22,11 +22,12 @@ class Logout extends Component {
     }
     render() {
         return (
-           <div>
+            <div className={style.container}>
                 <Dimmer active>
-                    <Loader active>Logging out ...</Loader>
+                    <Loader>Logging out ...</Loader>
                 </Dimmer> 
-           </div>
+            </div>
+                
         )
     }
 }

@@ -47,7 +47,7 @@ class DonationPost extends Component {
     console.log(this.state)
     return (
       <div>
-          {this.state.donation.length!=0?
+          {this.state.donation.length!==0?
             <DonationPostUI {...this.state} updateStatus={this.updateStatus}/>
 
             :<div></div>

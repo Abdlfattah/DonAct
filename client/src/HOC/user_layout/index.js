@@ -36,7 +36,7 @@ class UserLayout extends React.Component {
 
     triggerDropdown = (
         <span>
-          <Image avatar src={`/api/public/${this.state.user.avatar}`} /> {this.state.user.name} {this.state.user.lastname}
+          <Image avatar src={this.state.user.avatar?`/api/public/${this.state.user.avatar}`:'./image/avatar.png'} /> {this.state.user.name} {this.state.user.lastname}
         </span>
       )
 

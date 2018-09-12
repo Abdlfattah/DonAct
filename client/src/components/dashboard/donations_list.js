@@ -3,6 +3,7 @@ import { Image, Item, Icon, Button } from 'semantic-ui-react'
 import style from './style.css'
 import { options  } from '../../config/donation_type'
 import { items as items_status } from '../../config/donation_status'
+import moment from 'moment'
 
 
 function DonationsList(props) {
@@ -13,6 +14,7 @@ function DonationsList(props) {
                 <Item.Image className={style.donation_img} as='img' src={`/api/public/${item.post.image}`} />
                 <Item.Content >
                     <Item.Header ><h2>{item.post.title}</h2></Item.Header>
+                    <Item.Content><div className={style.date}>{moment(item.createdAt).format("DD/MM/YYYY")}</div></Item.Content>
                     <Item.Content >
                        {props.role==='charity'?
                         <div>
@@ -57,7 +59,6 @@ function DonationsList(props) {
             </Item>
         ))
     )
-    console.log(props.donations)
     return (
         <div>
             {props.donations.length===0?
